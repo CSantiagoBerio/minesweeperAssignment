@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 
 public class MyMouseAdapter extends MouseAdapter {
 	private Random generator = new Random();
-	
+
 
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {
@@ -99,77 +99,35 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Do nothing
 					} else {
 						//Released the mouse button on the same cell where it was pressed
-						if ((gridX == 0) && (gridY == 0)) {
-							//Paint diagonal grid cells
-
-						} 
-						else if(gridX == 0  ){
-							//paint whole columns
-							
-						}
-						else if(gridY == 0  ){
-							//paint whole rows
-							
-
-						}
-						else {
+						if(!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.RED)) {
 							//On the grid other than on the left column and on the top row:
 							Color newColor = null;
 							Color beforeColor = null;
 							
-							//Same Color will not repeat consecutively
-							do{
-								beforeColor = myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY];
+							beforeColor = myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY];
 								//newColor = colorSwitch();
-								switch (generator.nextInt(5)) {
-								case 0:
-									newColor = Color.YELLOW;
+								switch (generator.nextInt(2)) { //has to be changed for a returned value from a method that checks if a mine is there or not
+								case 0:							
+									newColor = Color.YELLOW;		//if it is paints black
 									break;
 								case 1:
-									newColor = Color.MAGENTA;
+									newColor = Color.ORANGE;		//if its not paints white
 									break;
-								case 2:
-									newColor = Color.BLACK;
-									break;
-								case 3:
-									newColor = new Color(0x964B00);   //Brown (from http://simple.wikipedia.org/wiki/List_of_colors)
-									break;
-								case 4:
-									newColor = new Color(0xB57EDC);   //Lavender (from http://simple.wikipedia.org/wiki/List_of_colors)
-									break;
+									//different colors for debugging purposes 
 								}
-							}while((newColor.equals(beforeColor)));
-
 							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
 							myPanel.repaint();
-
-
-
-						} if(gridY == 10 && gridX == 0){
-
-						
-
-
-						}
-
+						} 
 					}
-
-
-
-
 				}
-
-
 			}
 
 			myPanel.repaint();
 			break;
 
-
-
 		case 3:		
 			//Right mouse button flags square grid
-			
+
 			Component c2 = e.getComponent();
 			while (!(c2 instanceof JFrame)) {
 				c2 = c2.getParent();
@@ -198,19 +156,17 @@ public class MyMouseAdapter extends MouseAdapter {
 					//Is released outside
 					//Do Nothing
 				}
-			else
-				if((myPanel2.mouseDownGridX != gridX2) || (myPanel2.mouseDownGridY != gridY2)){
-					//Released the mouse button on a different cell where it was pressed
-					//Do nothing
-				}
-				else {
-					Color flagColor = null;
-					flagColor = Color.RED;
-					myPanel2.colorArray[myPanel2.mouseDownGridX][myPanel2.mouseDownGridY] = flagColor;
-					myPanel2.repaint();
-				}
-
-			
+				else
+					if((myPanel2.mouseDownGridX != gridX2) || (myPanel2.mouseDownGridY != gridY2)){
+						//Released the mouse button on a different cell where it was pressed
+						//Do nothing
+					}
+					else {
+						Color flagColor = null;
+						flagColor = Color.RED;
+						myPanel2.colorArray[myPanel2.mouseDownGridX][myPanel2.mouseDownGridY] = flagColor;
+						myPanel2.repaint();
+					}
 			break;
 		default:    //Some other button (2 = Middle mouse button, etc.)
 			//Do nothing
