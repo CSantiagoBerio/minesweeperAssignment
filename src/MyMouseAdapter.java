@@ -3,13 +3,11 @@ import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Random;
+
 
 import javax.swing.JFrame;
 
 public class MyMouseAdapter extends MouseAdapter {
-	private Random generator = new Random();
-
 
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {
@@ -99,25 +97,30 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Do nothing
 					} else {
 						//Released the mouse button on the same cell where it was pressed
-						if(!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.RED)) {
-							//On the grid other than on the left column and on the top row:
-							Color newColor = null;
-							Color beforeColor = null;
+						if(!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.RED) && 
+								!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(myPanel.mine))) {
 							
-							beforeColor = myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY];
-								//newColor = colorSwitch();
-								switch (generator.nextInt(2)) { //has to be changed for a returned value from a method that checks if a mine is there or not
-								case 0:							
-									newColor = Color.YELLOW;		//if it is paints black
-									break;
-								case 1:
-									newColor = Color.ORANGE;		//if its not paints white
-									break;
-									//different colors for debugging purposes 
-								}
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = newColor;
+							//If mouse is pressed/released where there is no mine
+							//Paint light_gray
+							
+							Color notMineColor = null;
+
+							notMineColor = Color.LIGHT_GRAY;
+
+							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = notMineColor;
 							myPanel.repaint();
-						} 
+						} else
+							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(myPanel.mine[2][2])){
+								//If mouse is pressed/released where mine is located
+								//Paint black
+
+								Color mineColor = null;
+								mineColor = Color.BLACK;
+
+								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = mineColor;
+								myPanel.repaint();
+
+							}
 					}
 				}
 			}
@@ -161,7 +164,12 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Released the mouse button on a different cell where it was pressed
 						//Do nothing
 					}
-					else {
+					else 
+						if((myPanel2.mouseDownGridX == 0) || (myPanel2.mouseDownGridY  == 0)){
+							//Do nothing
+						}
+						else
+							if(gridX2 != 0 && gridY2 != 0){
 						Color flagColor = null;
 						flagColor = Color.RED;
 						myPanel2.colorArray[myPanel2.mouseDownGridX][myPanel2.mouseDownGridY] = flagColor;

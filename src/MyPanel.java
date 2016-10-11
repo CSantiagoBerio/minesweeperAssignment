@@ -6,6 +6,8 @@ import java.util.Random;
 import javax.swing.JPanel;
 
 public class MyPanel extends JPanel {
+	public Random mineCoorX = new Random();
+	public Random mineCoorY = new Random();
 	private static final long serialVersionUID = 3426940946811133635L;
 	private static final int GRID_X = 25;
 	private static final int GRID_Y = 25;
@@ -17,6 +19,7 @@ public class MyPanel extends JPanel {
 	public int mouseDownGridX = 0;
 	public int mouseDownGridY = 0;
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
+	public boolean[][] mine = new boolean[10][10];
 	public MyPanel() {   //This is the constructor... this code runs first to initialize
 		if (INNER_CELL_SIZE + (new Random()).nextInt(1) < 1) {	//Use of "random" to prevent unwanted Eclipse warning
 			throw new RuntimeException("INNER_CELL_SIZE must be positive!");
@@ -38,6 +41,11 @@ public class MyPanel extends JPanel {
 				colorArray[x][y] = Color.WHITE;
 			}
 		}
+		for(int mineNumber = 1; mineNumber<=10; mineNumber++ ){
+			mine[mineCoorX.nextInt(9)+1][mineCoorY.nextInt(9)+1] = true;
+		}
+		
+		
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -129,4 +137,25 @@ public class MyPanel extends JPanel {
 		}
 		return y;
 	}
+
+
+	public boolean MinePinpoint(){
+		//Locates mines in the grid
+		Random mineCoorX = new Random();
+		Random mineCoorY = new Random();
+		// Add 1 to each coordinate so that the random number created will be 1 between 10, not 0 between 9
+		int coordinateX;
+		int coordinateY;
+
+		//10 mines we'll be located on the grid
+		for(int i = 1; i<=10; i++){ 
+			coordinateX = mineCoorX.nextInt(9) + 1;
+			coordinateY = mineCoorY.nextInt(9) + 1;
+			int[][] mine = new int[coordinateX][coordinateY]; 
+		}
+		
+		return true;
+
+	}
+
 }
