@@ -9,6 +9,10 @@ import javax.swing.JFrame;
 
 public class MyMouseAdapter extends MouseAdapter {
 
+	private int xGrid;
+	private int yGrid;
+	MineObject[][] mine = null;
+
 	public void mousePressed(MouseEvent e) {
 		switch (e.getButton()) {
 		case 1:		//Left mouse button
@@ -97,17 +101,15 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Do nothing
 					} else {
 						//Released the mouse button on the same cell where it was pressed
-						if(!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.RED) && 
-								!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(myPanel.mine))) {
-							
+						if(!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == Color.RED) && 
+								!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals
+										(mine = new MineObject[myPanel.mouseDownGridX][myPanel.mouseDownGridY])) ) {
 							//If mouse is pressed/released where there is no mine
-							//Paint light_gray
-							
-							Color notMineColor = null;
+							//Paint light_gray							
+							Color safeZone = null;
+							safeZone = Color.LIGHT_GRAY;
 
-							notMineColor = Color.LIGHT_GRAY;
-
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = notMineColor;
+							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = safeZone;
 							myPanel.repaint();
 						} else
 							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(myPanel.mine[2][2])){
@@ -170,11 +172,24 @@ public class MyMouseAdapter extends MouseAdapter {
 						}
 						else
 							if(gridX2 != 0 && gridY2 != 0){
-						Color flagColor = null;
-						flagColor = Color.RED;
-						myPanel2.colorArray[myPanel2.mouseDownGridX][myPanel2.mouseDownGridY] = flagColor;
-						myPanel2.repaint();
-					}
+
+								Color flagColor = null;
+								Color beforeColor = null;
+								
+								beforeColor = myPanel2.colorArray[myPanel2.mouseDownGridX][myPanel2.mouseDownGridY];
+								switch(checkColor(beforeColor)){
+
+								case 1:
+									flagColor = Color.RED;
+								case 2:
+									flagColor = Color.WHITE;
+
+								}
+
+
+								myPanel2.colorArray[myPanel2.mouseDownGridX][myPanel2.mouseDownGridY] = flagColor;
+								myPanel2.repaint();
+							}
 			break;
 		default:    //Some other button (2 = Middle mouse button, etc.)
 			//Do nothing
@@ -182,4 +197,26 @@ public class MyMouseAdapter extends MouseAdapter {
 		}
 
 	}
+
+
+	public  int checkColor(Color c){
+
+		int trueValue;
+		if(c.equals(Color.RED)){
+
+			trueValue = 1;
+		}
+		else
+		{
+			trueValue = 0;
+		}
+
+		return trueValue;
+
+	}
+
+
+
+
+
 }
