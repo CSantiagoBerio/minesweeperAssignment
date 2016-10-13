@@ -3,17 +3,25 @@ import java.awt.Component;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import java.util.Random;
 
 import javax.swing.JFrame;
 
 public class MyMouseAdapter extends MouseAdapter {
 
-	private int xGrid;
-	private int yGrid;
+	public int xGrid;
+	public int yGrid;
 	MineObject[][] mine = null;
 
 	public void mousePressed(MouseEvent e) {
+		Random mineCoorX = new Random();
+		Random mineCoorY = new Random();
+		MineObject[][] mine1 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
+		MineObject[][] mine2 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
+		MineObject[][] mine3 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
+		MineObject[][] mine4 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
+		MineObject[][] mine5 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
+		
 		switch (e.getButton()) {
 		case 1:		//Left mouse button
 			Component c = e.getComponent();
@@ -101,18 +109,19 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Do nothing
 					} else {
 						//Released the mouse button on the same cell where it was pressed
-						if(!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == Color.RED) && 
-								!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals
-										(mine = new MineObject[myPanel.mouseDownGridX][myPanel.mouseDownGridY])) ) {
-							//If mouse is pressed/released where there is no mine
-							//Paint light_gray							
-							Color safeZone = null;
-							safeZone = Color.LIGHT_GRAY;
-
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = safeZone;
-							myPanel.repaint();
-						} else
-							if(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals(myPanel.mine[2][2])){
+						if(false){//!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == Color.RED) && 
+//								!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals
+//										(mine = new MineObject[myPanel.mouseDownGridX][myPanel.mouseDownGridY])) ) {
+//							//If mouse is pressed/released where there is no mine
+//							//Paint light_gray							
+//							Color safeZone = null;
+//							safeZone = Color.LIGHT_GRAY;
+//
+//							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = safeZone;
+//							myPanel.repaint();
+						} 
+						else 
+							if(MineObject.hasBeenClicked()){
 								//If mouse is pressed/released where mine is located
 								//Paint black
 

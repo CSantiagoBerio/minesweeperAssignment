@@ -1,41 +1,46 @@
-import java.awt.Color;
-
-
-public class MineObject {
+public class MineObject extends MyMouseAdapter {
+	private int xGrid;
+	private int yGrid;
 	
-	private boolean beenClicked = false;
-	private int xCoordinate;
-	private int yCoordinate;
-	private Color mineColor; 
+	MineObject(int xLoc, int yLoc){
+		xGrid = xLoc;
+		yGrid = yLoc;
+	}
 	
-
-	public MineObject(int xCoordinate, int yCoordinate){
-		this.xCoordinate = xCoordinate;
-		this.yCoordinate = yCoordinate;
+//	private boolean beenClicked = false;
+//	private int xCoordinate;
+//	private int yCoordinate;
+//	private Color mineColor; 
+//	
+//
+//	public MineObject(int xCoordinate, int yCoordinate){
+//		this.xCoordinate = xCoordinate;
+//		this.yCoordinate = yCoordinate;
+//		
+//	}
+//	
+	public static boolean hasBeenClicked(){
 		
+		return true;//dummy return
 	}
-	
-	public boolean hasBeenClicked(){
-		return beenClicked;
-	}
-	
-	public void sethasBeenClicked(boolean clicked){
-		beenClicked = clicked;
-	}
-
-	public int getxCoordinate() { return xCoordinate; }
-
-
-	public int getyCoordinate() { return yCoordinate; }
-
-
-	public Color setMineColor(Color mineColor){
-		return this.mineColor = mineColor;
-	}
-
-	public Color getMineColor() {
-		return mineColor;
-	}
+//	
+//	public void sethasBeenClicked(boolean clicked){
+//		beenClicked = clicked;
+//	}
+//
+//	public int getxCoordinate() { return xCoordinate; }
+//
+//
+//	public int getyCoordinate() { return yCoordinate; }
+//
+//
+//	public Color setMineColor(Color mineColor){
+//		return this.mineColor = mineColor;
+//	}
+//
+//	public Color getMineColor() {
+//		return mineColor;
+//	}
 	
 	
 	
