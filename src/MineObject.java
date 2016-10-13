@@ -1,11 +1,18 @@
 public class MineObject extends MyMouseAdapter {
-	private int xGrid;
-	private int yGrid;
+	public int xGridObj;
+	public int yGridObj;
 	
 	MineObject(int xLoc, int yLoc){
-		xGrid = xLoc;
-		yGrid = yLoc;
+		xGridObj = xLoc;
+		yGridObj = yLoc;
 	}
+	
+//	public boolean equalS(){
+//		int w1,w2,z1,z2;
+//		w1 = this
+//		
+//		return false;//dummy return		
+//	}
 	
 //	private boolean beenClicked = false;
 //	private int xCoordinate;
@@ -19,8 +26,8 @@ public class MineObject extends MyMouseAdapter {
 //		
 //	}
 //	
-	public static boolean hasBeenClicked(){
-		
+	public static boolean hasBeenClicked(){					//uncomment in the future
+//		return ((xGrid == m))
 		return true;//dummy return
 	}
 //	

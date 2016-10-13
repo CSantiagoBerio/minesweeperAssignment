@@ -12,16 +12,17 @@ public class MyMouseAdapter extends MouseAdapter {
 	public int xGrid;
 	public int yGrid;
 	MineObject[][] mine = null;
+	Random mineCoorX = new Random();
+	Random mineCoorY = new Random();
+	MineObject[][] mine1 = new MineObject[1][3];
+	MineObject[][] mine2 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
+	MineObject[][] mine3 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
+	MineObject[][] mine4 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
+	MineObject[][] mine5 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
 
 	public void mousePressed(MouseEvent e) {
-		Random mineCoorX = new Random();
-		Random mineCoorY = new Random();
-		MineObject[][] mine1 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
-		MineObject[][] mine2 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
-		MineObject[][] mine3 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
-		MineObject[][] mine4 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
-		MineObject[][] mine5 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
-		
+
+
 		switch (e.getButton()) {
 		case 1:		//Left mouse button
 			Component c = e.getComponent();
@@ -109,29 +110,34 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Do nothing
 					} else {
 						//Released the mouse button on the same cell where it was pressed
+						MineObject[][] clickCompare = new MineObject[myPanel.mouseDownGridX][myPanel.mouseDownGridY];
 						if(false){//!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == Color.RED) && 
-//								!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals
-//										(mine = new MineObject[myPanel.mouseDownGridX][myPanel.mouseDownGridY])) ) {
-//							//If mouse is pressed/released where there is no mine
-//							//Paint light_gray							
-//							Color safeZone = null;
-//							safeZone = Color.LIGHT_GRAY;
-//
-//							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = safeZone;
-//							myPanel.repaint();
+							//								!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals
+							//										(mine = new MineObject[myPanel.mouseDownGridX][myPanel.mouseDownGridY])) ) {
+							//							//If mouse is pressed/released where there is no mine
+							//							//Paint light_gray							
+							//							Color safeZone = null;
+							//							safeZone = Color.LIGHT_GRAY;
+							//
+							//							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = safeZone;
+							//							myPanel.repaint();
 						} 
-						else 
-							if(MineObject.hasBeenClicked()){
-								//If mouse is pressed/released where mine is located
-								//Paint black
+						
+						else if(MineObject.hasBeenClicked()){ //compare 
+							//If mouse is pressed/released where mine is located
+							//Paint black
 
-								Color mineColor = null;
-								mineColor = Color.BLACK;
+							Color mineColor = null;
+							mineColor = Color.BLACK;
 
-								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = mineColor;
-								myPanel.repaint();
+							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = mineColor;
+							myPanel.repaint();
+						}
+						
 
-							}
+
+
+
 					}
 				}
 			}
@@ -184,7 +190,7 @@ public class MyMouseAdapter extends MouseAdapter {
 
 								Color flagColor = null;
 								Color beforeColor = null;
-								
+
 								beforeColor = myPanel2.colorArray[myPanel2.mouseDownGridX][myPanel2.mouseDownGridY];
 								switch(checkColor(beforeColor)){
 
