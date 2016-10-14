@@ -11,7 +11,7 @@ public class MyMouseAdapter extends MouseAdapter {
 
 	public int xGrid;
 	public int yGrid;
-
+	public Color MineColor = Color.BLACK;
 
 	public void mousePressed(MouseEvent e) {
 		Component c = e.getComponent();
@@ -93,10 +93,8 @@ public class MyMouseAdapter extends MouseAdapter {
 
 
 						} else {
-							if(myPanel.MinesArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].getRGB() != myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].getRGB() && 
-									!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == (Color.RED))) {
-
-								myPanel.MinesArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.BLACK;
+							if(!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == (Color.RED)) && (myPanel.MinesArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == Color.BLACK )) {
+								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = MineColor;
 								myPanel.repaint();
 
 
@@ -154,38 +152,38 @@ public class MyMouseAdapter extends MouseAdapter {
 			//Right mouse button flags square grid
 
 
-			if((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1)){
-				//Is pressed outside
-				//Do nothing
-			}
-			else 
-				if((gridX == -1) || (gridY == -1)){
-					//Is released outside
-					//Do Nothing
-				}
-				else
-					if((myPanel.mouseDownGridX != gridX) || (myPanel.mouseDownGridY != gridY)){
-						//Released the mouse button on a different cell where it was pressed
-						//Do nothing
-					}
-					else 
-						if((myPanel.mouseDownGridX == 0) || (myPanel.mouseDownGridY  == 0)){
-							//Do nothing
-						}
-						else{
-							if(!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.LIGHT_GRAY)){
-								if(gridX != 0 && gridY != 0 && !(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == Color.RED)){
-									Color flagColor = null;
-									flagColor = Color.RED;
-									myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = flagColor;
-									myPanel.repaint();
-								}
-								else if(gridX != 0 && gridY != 0 && myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == Color.RED){
-									myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.WHITE;
-									myPanel.repaint();
-								}
-							}
-						}
+//			if((myPanel.mouseDownGridX == -1) || (myPanel.mouseDownGridY == -1)){
+//				//Is pressed outside
+//				//Do nothing
+//			}
+//			else 
+//				if((gridX == -1) || (gridY == -1)){
+//					//Is released outside
+//					//Do Nothing
+//				}
+//				else
+//					if((myPanel.mouseDownGridX != gridX) || (myPanel.mouseDownGridY != gridY)){
+//						//Released the mouse button on a different cell where it was pressed
+//						//Do nothing
+//					}
+//					else 
+//						if((myPanel.mouseDownGridX == 0) || (myPanel.mouseDownGridY  == 0)){
+//							//Do nothing
+//						}
+//						else{
+//							if(!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]==Color.LIGHT_GRAY)){
+//								if(gridX != 0 && gridY != 0 && !(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == Color.RED)){
+//									Color flagColor = null;
+//									flagColor = Color.RED;
+//									myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = flagColor;
+//									myPanel.repaint();
+//								}
+//								else if(gridX != 0 && gridY != 0 && myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == Color.RED){
+//									myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.WHITE;
+//									myPanel.repaint();
+//								}
+//							}
+//						}
 			break;
 		default:    //Some other button (2 = Middle mouse button, etc.)
 			//Do nothing
