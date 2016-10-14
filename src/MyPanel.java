@@ -20,7 +20,7 @@ public class MyPanel extends JPanel {
 	public int mouseDownGridY = 0;
 	public Color[][] colorArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
 	public Color[][] MinesArray = new Color[TOTAL_COLUMNS][TOTAL_ROWS];
-	private Color mineColor;
+	
 	 private Random coorGen = new Random();
 	public MyPanel() { 
 		//This is the constructor... this code runs first to initialize
@@ -56,43 +56,27 @@ public class MyPanel extends JPanel {
 	}
 
 
-
+	//Method: Spawns mines in the grid
 	public void MineSpawner(int mineQuantity){
 		int mineCount=0;
 		int x; 
 		int y;
+		Color minesColor = null;
 		for(int counter=0; counter<mineQuantity; counter++){
 			 x = coorGen.nextInt(9)+1; 
 			 y = coorGen.nextInt(9)+1;
-			MinesArray[x][y] = Color.BLACK;
+			 minesColor = Color.BLACK;
+			MinesArray[x][y] = minesColor;
 			
 			mineCount++;
 			System.out.println("x: " + x + " y: " + y );
 			
 		}
 		System.out.println(mineCount);
-		System.out.println(Color.BLACK);
+		System.out.println(minesColor);
 		
 	}
 	
-	public  boolean verifyMine(int xLoc, int yLoc){
-		if(this.MinesArray[xLoc][yLoc].equals(Color.BLACK)){
-			return true;
-		}
-		
-		return false;
-	}
-	
-	
-	public Color getMineColor() {
-		return mineColor;
-	}
-
-
-
-	public void setMineColor(Color mineColor) {
-		this.mineColor = mineColor;
-	}
 
 
 
