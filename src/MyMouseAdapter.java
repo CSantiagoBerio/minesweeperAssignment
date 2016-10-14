@@ -11,15 +11,23 @@ public class MyMouseAdapter extends MouseAdapter {
 
 	public int xGrid;
 	public int yGrid;
-	MineObject[][] mine = null;
-	Random mineCoorX = new Random();
-	Random mineCoorY = new Random();
-	MineObject[][] mine1 = new MineObject[1][3];
-	MineObject[][] mine2 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
-	MineObject[][] mine3 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
-	MineObject[][] mine4 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
-	MineObject[][] mine5 = new MineObject[mineCoorX.nextInt(9)][mineCoorY.nextInt(9)];
+	public Color[][] MinesArray = new Color[10][10];
+	Random coorGen = new Random();
+	public void MineSpawner(){
+		for(int j=0;j<=10;j++){
+			for(int i=0;i<=10;i++){
+				MinesArray[j][i] = Color.WHITE;
+			}
+		}
 
+		MinesArray[coorGen.nextInt(8)+1][coorGen.nextInt(8)+1] = Color.BLACK;
+		MinesArray[coorGen.nextInt(8)+1][coorGen.nextInt(8)+1] = Color.BLACK;
+		MinesArray[coorGen.nextInt(8)+1][coorGen.nextInt(8)+1] = Color.BLACK;
+		MinesArray[coorGen.nextInt(8)+1][coorGen.nextInt(8)+1] = Color.BLACK;
+		MinesArray[coorGen.nextInt(8)+1][coorGen.nextInt(8)+1] = Color.BLACK;
+		MinesArray[coorGen.nextInt(8)+1][coorGen.nextInt(8)+1] = Color.BLACK;
+		MinesArray[3][3] = Color.BLACK;
+	}
 	public void mousePressed(MouseEvent e) {
 
 
@@ -110,128 +118,95 @@ public class MyMouseAdapter extends MouseAdapter {
 						//Do nothing
 					} else {
 						//Released the mouse button on the same cell where it was pressed
-						MineObject[][] clickCompare = new MineObject[myPanel.mouseDownGridX][myPanel.mouseDownGridY];
-						if(false){//!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == Color.RED) && 
-							//								!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY].equals
-							//										(mine = new MineObject[myPanel.mouseDownGridX][myPanel.mouseDownGridY])) ) {
-							//							//If mouse is pressed/released where there is no mine
-							//							//Paint light_gray							
-							//							Color safeZone = null;
-							//							safeZone = Color.LIGHT_GRAY;
-							//
-							//							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = safeZone;
-							//							myPanel.repaint();
-						} 
-						
-						else if(MineObject.hasBeenClicked()){ //compare 
-							//If mouse is pressed/released where mine is located
-							//Paint black
+						if ((gridX == 0) || (gridY == 0)) {
+							//On the left column and on the top row... do nothing
 
-							Color mineColor = null;
-							mineColor = Color.BLACK;
 
-							myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = mineColor;
-							myPanel.repaint();
+						} else {
+							if(MinesArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY]== Color.BLACK && 
+									!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == Color.RED)) {
+								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.BLACK;
+								myPanel.repaint();
+								for(int j=0;j<=10;j++){
+									for(int i=0;i<=10;i++){
+										if(MinesArray[j][i]==Color.BLACK){
+											myPanel.colorArray[j][i]=Color.BLACK;
+											myPanel.repaint();
+										}}}
+
+							}
+							else if(!(myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] == Color.RED)){
+								myPanel.colorArray[myPanel.mouseDownGridX][myPanel.mouseDownGridY] = Color.LIGHT_GRAY;
+								myPanel.repaint();
 						}
-						
-
-
-
-
 					}
 				}
+
 			}
+		}
 
-			myPanel.repaint();
-			break;
 
-		case 3:		
-			//Right mouse button flags square grid
 
-			Component c2 = e.getComponent();
-			while (!(c2 instanceof JFrame)) {
-				c2 = c2.getParent();
-				if (c2 == null) {
-					return;
+
+	case 3:		
+		//Right mouse button flags square grid
+
+		Component c2 = e.getComponent();
+		while (!(c2 instanceof JFrame)) {
+			c2 = c2.getParent();
+			if (c2 == null) {
+				return;
+			}
+		}
+		JFrame myFrame2 = (JFrame)c2;
+		MyPanel myPanel2 = (MyPanel) myFrame2.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
+		Insets myInsets2 = myFrame2.getInsets();
+		int x3 = myInsets2.left;
+		int y3 = myInsets2.top;
+		e.translatePoint(-x3, -y3);
+		int x4 = e.getX();
+		int y4 = e.getY();
+		myPanel2.x = x4;
+		myPanel2.y = y4;
+		int gridX2 = myPanel2.getGridX(x4, y4);
+		int gridY2 = myPanel2.getGridY(x4, y4);
+		if((myPanel2.mouseDownGridX == -1) || (myPanel2.mouseDownGridY == -1)){
+			//Is pressed outside
+			//Do nothing
+		}
+		else 
+			if((gridX2 == -1) || (gridY2 == -1)){
+				//Is released outside
+				//Do Nothing
+			}
+			else
+				if((myPanel2.mouseDownGridX != gridX2) || (myPanel2.mouseDownGridY != gridY2)){
+					//Released the mouse button on a different cell where it was pressed
+					//Do nothing
 				}
-			}
-			JFrame myFrame2 = (JFrame)c2;
-			MyPanel myPanel2 = (MyPanel) myFrame2.getContentPane().getComponent(0);  //Can also loop among components to find MyPanel
-			Insets myInsets2 = myFrame2.getInsets();
-			int x3 = myInsets2.left;
-			int y3 = myInsets2.top;
-			e.translatePoint(-x3, -y3);
-			int x4 = e.getX();
-			int y4 = e.getY();
-			myPanel2.x = x4;
-			myPanel2.y = y4;
-			int gridX2 = myPanel2.getGridX(x4, y4);
-			int gridY2 = myPanel2.getGridY(x4, y4);
-			if((myPanel2.mouseDownGridX == -1) || (myPanel2.mouseDownGridY == -1)){
-				//Is pressed outside
-				//Do nothing
-			}
-			else 
-				if((gridX2 == -1) || (gridY2 == -1)){
-					//Is released outside
-					//Do Nothing
-				}
-				else
-					if((myPanel2.mouseDownGridX != gridX2) || (myPanel2.mouseDownGridY != gridY2)){
-						//Released the mouse button on a different cell where it was pressed
+				else 
+					if((myPanel2.mouseDownGridX == 0) || (myPanel2.mouseDownGridY  == 0)){
 						//Do nothing
 					}
-					else 
-						if((myPanel2.mouseDownGridX == 0) || (myPanel2.mouseDownGridY  == 0)){
-							//Do nothing
-						}
-						else
-							if(gridX2 != 0 && gridY2 != 0){
-
+					else{
+						if(!(myPanel2.colorArray[myPanel2.mouseDownGridX][myPanel2.mouseDownGridY]==Color.LIGHT_GRAY)){
+							if(gridX2 != 0 && gridY2 != 0 && !(myPanel2.colorArray[myPanel2.mouseDownGridX][myPanel2.mouseDownGridY] == Color.RED)){
 								Color flagColor = null;
-								Color beforeColor = null;
-
-								beforeColor = myPanel2.colorArray[myPanel2.mouseDownGridX][myPanel2.mouseDownGridY];
-								switch(checkColor(beforeColor)){
-
-								case 1:
-									flagColor = Color.RED;
-								case 2:
-									flagColor = Color.WHITE;
-
-								}
-
-
+								flagColor = Color.RED;
 								myPanel2.colorArray[myPanel2.mouseDownGridX][myPanel2.mouseDownGridY] = flagColor;
 								myPanel2.repaint();
 							}
-			break;
-		default:    //Some other button (2 = Middle mouse button, etc.)
-			//Do nothing
-			break;
-		}
-
+							else if(gridX2 != 0 && gridY2 != 0 && myPanel2.colorArray[myPanel2.mouseDownGridX][myPanel2.mouseDownGridY] == Color.RED){
+								myPanel2.colorArray[myPanel2.mouseDownGridX][myPanel2.mouseDownGridY] = Color.WHITE;
+								myPanel2.repaint();
+							}
+						}
+					}
+		break;
+	default:    //Some other button (2 = Middle mouse button, etc.)
+		//Do nothing
+		break;
 	}
 
-
-	public  int checkColor(Color c){
-
-		int trueValue;
-		if(c.equals(Color.RED)){
-
-			trueValue = 1;
-		}
-		else
-		{
-			trueValue = 0;
-		}
-
-		return trueValue;
-
-	}
-
-
-
-
-
+}
 }
